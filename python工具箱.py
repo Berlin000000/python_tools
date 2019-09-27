@@ -3,17 +3,18 @@ from collections import defaultdict
 import json
 import qrcode
 
+
 print("输入您想做的事情，实现字符串加密请输入1，实现密文解密请输入2，反转字典请输入3，生成二维码请输入4，退出程序请输入#")
 alt=input()
-
-while alt!='#':
+while alt != '#':
+    alt=input()
 
     if(alt=='1'):
         try:
             print("input:")
-            str=input()
-            str=str.encode('utf-8')
-            bs64=base64.b64encode(str)
+            str = input()
+            str = str.encode('utf-8')
+            bs64 = base64.b64encode(str)
         except:
             print("请输入字符串")
         print("加密结果是")
@@ -23,7 +24,11 @@ while alt!='#':
         try:
             print("input:")
             secret=input()
-            debs64 = base64.b64decode(secret)
+            # 由于加密后的密文中存在的字符仅有数字0~9，字母A~Z，a~z，符号+、/、=
+            for letter in secret:
+                if letter>='a' and letter<='z'or letter>='A' and letter<='Z' or letter>='0' and letter<='9' or letter=='+' or letter=='/' or letter=='=':
+                    debs64 = base64.b64decode(secret)
+                else:print("请输入合法密文")
         except:
             print("请输入密文")
         print("解密结果是")
@@ -65,3 +70,5 @@ while alt!='#':
 
         img = qrcode.make(line)
         img.save('test.png')
+
+print("退出程序成功！")
